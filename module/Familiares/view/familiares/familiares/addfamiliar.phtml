@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+$title =  $this->translate('Nuevo Familiar'); # page title
+# meta keywords
+$this->headMeta()->appendName('keywords', 'Traslado, Rescate, Pacientes');
+# meta description
+$this->headMeta()->appendName('description', 'Nuevos Traslados de Pacientes');
+# page title
+$this->headTitle($this->escapeHtml($title));
+#form
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('action', $this->url('nuevo-familiar'));  #oops
+$form->get('Pacientes_idPacientes')->setAttribute('value', $this->id);
+
+?>
+<!-- Content Header (Page header) -->
+<?= $this->form()->openTag($form); ?>
+<div class="card card-info card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-edit"></i>
+            Agregar nuevo familiar...
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3">
+                <!-- text input -->
+                <?= $this->formHidden($form->get('Pacientes_idPacientes')); ?>
+                <?= $this->formLabel($form->get('nombreCompletoF')); ?>
+                <div class="form-group">
+                    <?= $this->formText($form->get('nombreCompletoF')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('nombreCompletoF')); ?>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <?= $this->formLabel($form->get('domicilio')); ?>
+                <div class="form-group">
+                    <?= $this->formText($form->get('domicilio')); ?>
+                </div>
+            </div>
+            <div class="text-danger">
+                <?= $this->formElementErrors($form->get('domicilio')); ?>
+            </div>
+
+            <div class="col-3">
+                <?= $this->formLabel($form->get('colonia')); ?>
+                <div class="form-group">
+                    <?= $this->formText($form->get('colonia')); ?>
+                </div>
+            </div>
+            <div class="text-danger">
+                <?= $this->formElementErrors($form->get('colonia')); ?>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('telefono')); ?>
+                    <?= $this->formText($form->get('telefono')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('telefono')); ?>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('celular')); ?>
+                    <?= $this->formText($form->get('celular')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('celular')); ?>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('telefonoTrabajo')); ?>
+                    <?= $this->formText($form->get('telefonoTrabajo')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('telefonoTrabajo')); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <?= $this->formSubmit($form->get('btnGuardar')); ?>
+        <button type="button" id="btnCerrar1" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>
+
+<?= $this->form()->closeTag(); ?>

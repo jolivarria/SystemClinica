@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<script>
+ $(document).ready(function () {
+    Toast.fire({
+      icon: 'success',
+      title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+    })
+  });
+</script>
+
+
+<section class="content">
+<a class="btn btn-app bg-info" href="<?= $this->url('traslado-new'); ?>">    
+    <i class="fas fa-file"></i>
+    </i> Nuevo
+  </a>
+  <div class="card card-info card-outline">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="card-title">Rescate de Pacientes SysClinica</h1>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Foio</th>
+                  <th>Operadora</th>
+                  <th>Paciente</th>
+                  <th>Edad</th>
+                  <th>Responsable</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($this->traslados as $traslado) {  ?>
+                  <tr>
+                    <td><?= $traslado->getFolio() ?> </td>
+                    <td><?= $traslado->getOperadora() ?></td>
+                    <td><?= $traslado->getNombreCompleto() ?></td>
+                    <td><?= $traslado->getEdad() ?></td>
+                    <td><?= $traslado->getNombreResposable() ?></td>
+                    <td>
+                      <a class="btn btn-primary btn-sm" href="<?= $this->url('traslado-detalle', ['action' => 'detalle', 'id' => $traslado->getIdsolicitudRescate()]) ?>">
+                        <i class="fas fa-folder">
+                        </i>
+                        View
+                      </a>
+                      <a class="btn btn-info btn-sm" href="<?= $this->url('traslado-edit', ['action' => 'edit', 'id' => $traslado->getIdsolicitudRescate()]) ?>">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Edit
+                      </a>
+                      <a class="btn btn-danger btn-sm" id="btnConfirm" href="#">
+                        <i class="fas fa-trash">
+                        </i>
+                        Delete
+                      </a>
+                    </td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Foio</th>
+                  <th>Operadora</th>
+                  <th>Paciente</th>
+                  <th>Edad</th>
+                  <th>Responsable</th>
+                  <th>Acción</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+
+
+      </div>
+      <!-- /.modal -->
+
+    </div>
+    <!-- ./row -->
+  </div><!-- /.container-fluid -->
+</section>
+

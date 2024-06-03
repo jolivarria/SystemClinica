@@ -1,0 +1,179 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<h1 class="m-0">Expedinte: <ion-icon name="folder-outline"></ion-icon><ion-icon name="file-tray-full-outline"></ion-icon></h1>
+
+<!-- Content Header (Page header) -->
+<section class="content">
+    <div class="card card-info card-outline">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Expedientes del SysClinica</h1>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Paciente</th>
+                                    <th>N° Expediente</th>
+                                    <th>Servicios Médicos</th>
+                                    <th>Como ingresa</th>
+                                    <th>Ocupación</th>
+                                    <th>Fecha Nacimiento</th>
+                                    <th>Fecha</th>
+                                    <th>Timpo</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($this->expedientes as $obj) { ?>
+                                    <tr>
+                                        <td>
+                                            <div class="image">
+                                                <img height="100px" width="100px" src="/sysclinica/public/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                                            </div>
+                                            <div class="info">
+                                                <a href="#" class="d-block"><?= $obj->getNombreCompleto() ?></a>
+                                            </div>
+                                        </td>
+                                        <td><?= $obj->getNumeroExpediente() ?>
+                                            <?php echo $resultado = $obj->getEstado() === 'Nuevo'  ? '<span class="badge bg-success">Nuevo</span>' : '<span class="badge bg-danger">Abierto</span>'; ?></td>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if ($obj->getServiciosMedicos() === '1') {
+                                                echo 'Si Cuenta: ' . $obj->getTipoServicioMedico();
+                                            } else {
+                                                echo 'No Cuenta: ' . $obj->getTipoServicioMedico();;
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?= $obj->getTipoIngreso() ?></td>
+                                        <td>Ejemoplo</td>
+                                        <td>Ejemoplo</td>
+                                        <td>
+                                            <?= $obj->getFechaExpediente() ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $fechaInicial = new DateTime($obj->getFechaExpediente());
+                                            $actualidad = new DateTime();
+                                            $interval = $fechaInicial->diff($actualidad);
+
+                                            $this->Edades = array(
+                                                "Agnos" => $interval->format('%y'),
+                                                "Meses" => $interval->format('%m'),
+                                                "Dias" => $interval->format('%d')
+                                            );
+                                            if ($this->Edades['Agnos'] != 0) {
+                                                echo 'Años: ' . $this->Edades['Agnos'] . '<br>';
+                                            }
+                                            if ($this->Edades['Meses'] != 0) {
+                                                echo 'Meses: ' . $this->Edades['Meses'] . '<br>';
+                                            }
+                                            if ($this->Edades['Dias'] != 0) {
+                                                echo 'Dias: ' . $this->Edades['Dias'];
+                                            }
+
+
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <div class="input-group-prepend">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    Action
+                                                </button>
+                                                <div class="dropdown-menu" style="">
+
+
+                                                    <?php
+                                                    if ($obj->getEstado() === 'Nuevo') {
+                                                        $link = $this->url('abrir-expediente', ['action' => 'openexp', 'id' => $obj->getPacientesIdPacientes()]);
+                                                        echo '<a class="dropdown-item" id="btnAbrirExp" data-toggle="" data-target="" href="' . $link . '">Abrir Expediente</a>';
+                                                    } else if ($obj->getEstado() === 'Abierto') {
+                                                        $link = $this->url('abrir-expediente', ['action' => 'openexp', 'id' => $obj->getPacientesIdPacientes()]);
+                                                        $link1 = $this->url('abrir-expediente', ['action' => 'rptconsentimieno', 'id' => $obj->getPacientesIdPacientes()]);
+                                                        echo '<a class="dropdown-item" id="btnEgresar" data-toggle="" data-target="" href="' . $link . '">Cerrar Expediente</a>';
+                                                        echo '<a class="dropdown-item" id="btnEgresar" data-toggle="" data-target="" href="' . $link1 . '">Consentimiento</a>';
+                                                    }
+
+                                                    ?>
+                                                    <a class="dropdown-item" href=<?= $this->url('citas', ['action' => 'index', 'id' => $obj->getPacientesIdPacientes()]); ?>>Citas</a>
+                                                    <a class="dropdown-item" href=<?= $this->url('prestamos', ['action' => 'index', 'id' => $obj->getPacientesIdPacientes()]); ?>>Prestamos                                                    
+                                                    <span class="badge badge-danger navbar-badge">3</span>
+                                                    </a>
+                                                    <a class="dropdown-item" href="#">Pago</a>
+                                                    <a class="dropdown-item" href="#">Traslados</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="#">Familiares</a>
+                                                </div>
+                                            </div>
+                                            <!--<a class="btn btn-primary btn-sm" href="<?= $this->url('nuevo-familiar', ['action' => 'addfamiliar', 'id' => $obj->getPacientesIdPacientes()]) ?>">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                            <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default" href="#">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </a>
+                                            <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-xl" href="#">
+                                                <i class="fas fa-pencil-alt">
+                                                </i>
+                                            </a>--->
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Paciente</th>
+                                    <th>N° Expediente</th>
+                                    <th>Servicios Médicos</th>
+                                    <th>Como ingresa</th>
+                                    <th>Ocupación</th>
+                                    <th>Fecha Nacimiento</th>
+                                    <th>Fecha del Expedidte</th>
+                                    <th>Dias</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+                <div class="modal fade" id="modal-xl">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Abrir expediente selecciondo...</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="content-modal">
+                                    <p>One fine body&hellip;</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+            </div>
+            <!-- /.modal -->
+        </div>
+        <!-- ./row -->
+    </div><!-- /.container-fluid -->
+</section>

@@ -1,0 +1,155 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<!-- Content Header (Page header) -->
+<ion-icon name="add-circle-outline"></ion-icon>
+<section class="content">
+  <a class="btn btn-app" href="<?= $this->url('ingreso-alta'); ?>">
+    <i class="fas fa-file"></i> Nuevo
+  </a>
+  <a class="btn btn-app bg-info" href="<?= $this->url('ingreso-alta'); ?>">
+    <i class="fas fa-regular fa-file"></i>
+    </i> Reingreso
+  </a>
+  <a class="btn btn-app bg-info" href="<?= $this->url('ingreso-alta'); ?>">
+    <i class="fas fa-regular fa-file"></i>
+    </i> Existente
+  </a>
+  <hr>
+  <div class="card card-info card-outline">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="card-title">Ingresos del SysClinica</h1>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Imagen</th>
+                  <th>Paciente</th>
+                  <th>Fecha Ingreso</th>
+                  <th>Tipo Ingreso</th>
+                  <th>Referencia</th>
+                  <th>Reingreso</th>
+                  <th>Acude</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($this->ingresos as $ingreso) {  ?>
+                  <tr>
+                    <td>
+                      <div class="image">
+                        <img src="/sysclinica/public/dist/img/user100x100.jpg" class="img-circle elevation-2 btn-sm" alt="User Image">
+                      </div>
+
+                    </td>
+                    <td><?= $ingreso->getNomCompleto() ?> <?php echo $resultado = $ingreso->getIdsolicitudRescate() ? '<span class="badge bg-success">Rescate: Si</span>' : '<span class="badge bg-danger">Rescate: No</span>'; ?></td>
+                    <td><?= $ingreso->getFechaIngreso() ?></td>
+                    <td><?= $ingreso->getTipoIngreso() ?></td>
+                    <td><?= $ingreso->getReferencia() ?></td>
+                    <td><?= $ingreso->getReingreso() ?></td>
+                    <td><?= $ingreso->getAcude() ?></td>
+                    <td>
+
+                      <a class="btn btn-primary btn-sm" href="#">
+                        <i class="fas fa-folder">
+                        </i>
+                        View
+                      </a>
+                      <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-xl" href="#">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Edit
+                      </a>
+                      <a class="btn btn-danger btn-sm" href="<?= $this->url('ingreso-eliminar', ['action' => 'eliminar', 'id' => $ingreso->getIdIngresos()]) ?>">
+                        <i class="fas fa-trash">
+                        </i>
+                        Delete
+                      </a>
+
+                    </td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <TH>Imagen</TH>
+                  <th>Paciente</th>
+                  <th>Fecha Ingreso</th>
+                  <th>Tipo Ingreso</th>
+                  <th>Referencia</th>
+                  <th>Reingreso</th>
+                  <th>Acude</th>
+                  <th>Acción</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+
+
+
+
+
+        <div class="modal fade" id="modal-default">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Seleccione el tipo de Ingreso</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Seleccióne el tipo de ingreso del paciente:</p>
+                <p>Nuevo ingreso: Esta opción abrira un expediente Nuevo, aqui seleccionamos si el usuario nunca a estado en nuestras instalaciones</p>
+                <p>Reingreso: Esta opción continua con el expediente anterior</p>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <a href="<?= $this->url('ingreso-alta'); ?>" class="btn btn-primary">Nuevo Ingreso.</a>
+                <a href="<?= $this->url('ingreso-alta'); ?>" class="btn btn-primary">Reingreso.</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+        <div class="modal fade" id="modal-xl">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Seleccionar Paciente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>One fine body&hellip;</p>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+      </div>
+      <!-- ./row -->
+    </div><!-- /.container-fluid -->
+</section>

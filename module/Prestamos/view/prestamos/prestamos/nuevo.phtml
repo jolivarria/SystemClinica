@@ -1,0 +1,132 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+
+$title =  $this->translate('Nuevo Prestamo'); # page title
+# meta keywords
+$this->headMeta()->appendName('keywords', 'Traslado, Rescate, Pacientes');
+# meta description
+$this->headMeta()->appendName('description', 'Nuevos Traslados de Pacientes');
+# page title
+$this->headTitle($this->escapeHtml($title));
+
+
+#form
+$form = $this->form;
+$this->form->prepare();
+$form->setAttribute('action', $this->url('guardar-cita'));  #oops
+
+?>
+<h1 class="m-0">Nuevo Prestamos: <ion-icon name="wallet-outline"></ion-icon><ion-icon name="cash-outline"></ion-icon></h1>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Datos del paciente</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>                            
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: block;">
+                        <table>
+                            <tr>
+                                <td style="width: 800px;">
+                                    <div class="card-footer" style="display: block;">
+
+
+                                        <strong>Nombre: </strong><?= $this->paciente->getNomCompleto() ?><br>
+                                        <strong>Dirección: </strong><?= $this->paciente->getDireccion() ?><br>
+                                        <strong>Escolaridad: </strong><?= $this->paciente->getEscolardiad() ?>
+                                    </div>
+                                </td>
+                                <td style="width:300px;">
+                                    <div class="card-footer" style="display: block;">
+                                        <strong>Tipo Ingreso: </strong><?= $this->paciente->getTipoIngreso() ?><br>
+                                        <strong>Acude: </strong><?= $this->paciente->getAcude() ?><br>
+                                        <strong>Fecha Ingreso: </strong><?= $this->paciente->getFechaIngreso() ?>
+                                    </div>
+                                </td>
+                                <td style="width:300px;">
+                                    <div class="card-footer" style="display: block;">
+                                        <div class="image">
+                                            <img height="73px" width="73px" src="/sysclinica/public/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</section>
+<!-- Content Header (Page header) -->
+<?= $this->form()->openTag($form); ?>
+<div class="card card-info card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-edit"></i>
+            Captura del prestamos del paciente
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <!-- /.card -->
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <!-- text input -->
+                <?= $this->formHidden($form->get('idPacientes')->setValue($this->paciente->getIdPacientes())); ?>
+                <?= $this->formHidden($form->get('idExpedientes')->setValue($this->paciente->getIdExpedientes())); ?>
+                <?= $this->formLabel($form->get('prestamo_monto')); ?>
+                <div class="form-group">
+                    <?= $this->formText($form->get('prestamo_monto')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('prestamo_monto')); ?>
+                </div>
+            </div>
+            <div class="col-2">
+                <?= $this->formLabel($form->get('taza_interes')); ?>
+                <div class="form-group">
+                    <?= $this->formText($form->get('taza_interes')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('taza_interes')); ?>
+                </div>
+            </div>
+            <div class="col-2">
+                <?= $this->formLabel($form->get('plazo')); ?>
+                <div class="form-group">
+                    <?= $this->formSelect($form->get('plazo')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('plazo')); ?>
+                </div>
+            </div>
+            <div class="col-3">
+                <?= $this->formLabel($form->get('concepto')); ?>
+                <div class="form-group">
+                    <?= $this->formTextarea($form->get('concepto')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('concepto')); ?>
+                </div>
+            </div>
+            <?= $this->formSubmit($form->get('btnGuardar')); ?>
+        </div>
+
+        <?= $this->form()->closeTag(); ?>
+    </div>

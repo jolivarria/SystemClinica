@@ -1,0 +1,14 @@
+<?php
+
+# Note $this->flashMessenger() refers to a helper that is defined in the Laminas Framework
+$flash1 = $this->flashMessenger();
+
+$flash1->setMessageOpenFormat(
+    "toastr.success('si canallin1231231')"
+)->setMessageSeparatorString('</li><li>')->setMessageCloseString('</li></ul></div>');
+
+
+echo $flash1->render('info', ['alert quizAlert', 'alert-dismissable', 'alert-info']);
+echo $flash1->render('error', ['alert quizAlert', 'alert-dismissable', 'alert-danger']);
+echo $flash1->render('default', ['alert quizAlert', 'alert-dismissable', 'alert-warning']);
+echo $flash1->render('success', ['alert quizAlert', 'alert-dismissable', 'alert-success']);

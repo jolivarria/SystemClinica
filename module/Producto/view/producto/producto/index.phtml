@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-widget">
+            <div class="card-header">
+                <div class="user-block">
+                    <img class="img-circle" src="/sysclinica/public/dist/img/products.png" alt="User Image">
+                    <span class="username"><a href="#">Prouctos y Servicios</a></span>
+                    <span class="description">Seleciona un proucto o un sevicio de la lista para editarlo o borrarlo
+                        <a class="btn btn-primary btn-sm" href="<?= $this->url('producto', ['action' => 'nuevo']) ?>">
+                            <i class="fas fa-plus"></i>
+                            Nuevo
+                        </a>
+                    </span>
+
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="display: block;">
+                <div class="row">
+                    <?php
+                    foreach ($this->productos as $obj) {
+                    ?>
+                        <!-- Costo de tratamiento $500 -->
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-info">
+                                <a href="<?= $this->url('producto-editar', ['action' => 'editar', 'id' => $obj->getIdproductos()]); ?>" class="small-box">
+                                    <div class="inner">
+                                        <h3>$<?= $obj->getPrecio() ?></h3>
+                                        <p><?= $obj->getNombre() ?></p>
+                                    </div>
+                                </a>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="<?= $this->url('borrar', ['action' => 'borrar', 'id' => $obj->getIdproductos()]); ?>" class="small-box-footer"> <?= $obj->getTipo() ?> <i class="fas fa-trash "></i></a>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+
+$title =  $this->translate('Editar Producto o Servicios'); # page title
+# meta keywords
+$this->headMeta()->appendName('keywords', 'Nuevo, Servicio, Productos');
+# meta description
+$this->headMeta()->appendName('description', 'Nuevos producto o servicio');
+# page title
+$this->headTitle($this->escapeHtml($title));
+
+
+#form
+$form = $this->form;
+$this->form->prepare();
+$form->setAttribute('action', $this->url('producto-nuevo'));  #oops
+
+?>
+
+<!-- Content Header (Page header) -->
+<?= $this->form()->openTag($form); ?>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-widget">
+            <div class="card-header">
+                <div class="user-block">
+                    <img class="img-circle" src="/sysclinica/public/dist/img/products.png" alt="User Image">
+                    <span class="username"><a href="<?= $this->url('producto', ['action' => 'index']) ?>">Prouctos y Servicios</a></span>
+                    <span class="description">Editar Productos y Servicios</span>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="display: block;">
+            <div class="row">
+            <div class="col-5">
+                <!-- text input -->
+                <?= $this->formHidden($form->get('idproductos')); ?>
+
+                <?= $this->formLabel($form->get('nombre')); ?>
+                <div class="form-group">
+                    <?= $this->formText($form->get('nombre')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('nombre')); ?>
+                </div>
+            </div>
+            <div class="col-5">
+                <?= $this->formLabel($form->get('descripcion')); ?>
+                <div class="form-group">
+                    <?= $this->formText($form->get('descripcion')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('descripcion')); ?>
+                </div>
+            </div>
+            <div class="col-5">
+                <?= $this->formLabel($form->get('tipo')); ?>
+                <div class="form-group">
+                    <?= $this->formSelect($form->get('tipo')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('tipo')); ?>
+                </div>
+            </div>
+            <div class="col-5">
+                <?= $this->formLabel($form->get('precio')); ?>
+                <div class="form-group">
+                    <?= $this->formText($form->get('precio')); ?>
+                </div>
+                <div class="text-danger">
+                    <?= $this->formElementErrors($form->get('precio')); ?>
+                </div>
+            </div>
+
+            <?= $this->formSubmit($form->get('btnGuardar')); ?>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?= $this->form()->closeTag(); ?>

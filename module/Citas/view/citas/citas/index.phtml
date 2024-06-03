@@ -1,0 +1,151 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<h1 class="m-0">Citas: <ion-icon name="receipt-outline"></ion-icon><ion-icon name="navigate-circle-outline"></ion-icon></h1>
+<!-- Content Header (Page header) -->
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Datos del paciente</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body" style="display: block;">
+        <table>
+            <tr>
+                <td style="width: 800px;">
+                    <div class="card-footer" style="display: block;">
+
+
+                        <strong>Nombre: </strong><?= $this->paciente->getNomCompleto() ?><br>
+                        <strong>Dirección: </strong><?= $this->paciente->getDireccion() ?><br>
+                        <strong>Escolaridad: </strong><?= $this->paciente->getEscolardiad() ?>
+                    </div>
+                </td>
+                <td style="width:300px;">
+                    <div class="card-footer" style="display: block;">
+                        <strong>Tipo Ingreso: </strong><?= $this->paciente->getTipoIngreso() ?><br>
+                        <strong>Acude: </strong><?= $this->paciente->getAcude() ?><br>
+                        <strong>Fecha Ingreso: </strong><?= $this->paciente->getFechaIngreso() ?>
+                    </div>
+                </td>
+                <td style="width:300px;">
+                    <div class="card-footer" style="display: block;">
+                        <div class="image">
+                            <img height="73px" width="73px" src="/sysclinica/public/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+
+
+    </div>
+
+</div>
+<section class="content">
+
+    <div class="card card-info card-outline">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Citas del SysClinica</h1>
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <a class="btn btn-app" href="<?= $this->url('citas', ['action' => 'nuevo', 'id' => $this->id]); ?>">
+                            <i class="fas fa-file"></i> Nuevo
+                        </a>
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>                                  
+                                    <th>Motivo</th>
+                                    <th>Observaciones</th>
+                                    <th>Ubicaciones</th>
+                                    <th>Fecha Cita</th>
+                                    <th>Estatus</th>
+
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($this->citas as $obj) { ?>
+                                    <tr>
+                                        <td><?= $obj->getMotivo() ?></td>
+                                        <td><?= $obj->getObservaciones() ?></td>
+                                        <td><?= $obj->getUbicacion() ?></td>                                
+                                        <td>
+                                            <?= $obj->getFecha() ?>
+                                            <?= obtenerFechaEnLetra($obj->getFecha()) ?>
+                                        </td>
+                                        <td><?= $obj->getEstado() ?></td>
+                                    </tr>
+                <?php } ?>
+                </tbody>
+                <tfoot>
+                    <tr>                     
+                        <th>Motivo</th>
+                        <th>Observaciones</th>
+                        <th>Ubicaciones</th>
+                        <th>Fecha Cita</th>
+                        <th>Estatus</th>
+                    </tr>
+                </tfoot>
+                </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+            <div class="modal fade" id="modal-xl">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Abrir expediente selecciondo...</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="content-modal">
+                                <p>One fine body&hellip;</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+        <!-- /.modal -->
+    </div>
+    <!-- ./row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<?php
+function obtenerFechaEnLetra($fecha){
+    $dia= conocerDiaSemanaFecha($fecha);
+    $num = date("j", strtotime($fecha));
+    $anno = date("Y", strtotime($fecha));
+    $mes = array('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre');
+    $mes = $mes[(date('m', strtotime($fecha))*1)-1];
+    return $dia.', '.$num.' de '.$mes.' del '.$anno;
+}
+function conocerDiaSemanaFecha($fecha) {
+    $dias = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
+    $dia = $dias[date('w', strtotime($fecha))];
+    return $dia;
+}
+?>

@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<!-- Content Header (Page header) -->
+<section class="content">
+    <div class="card card-info card-outline">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Traslados del SysClinica</h1>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>N° Expediente</th>
+                                    <th>Paciente</th>
+                                    <th>Como ingresa</th>
+                                    <th>Ocupación</th>
+                                    <th>Fecha Nacimiento</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($this->traslados as $obj) { ?>
+                                    <tr>
+                                        <td><?= $obj->getNumeroExpediente() ?></td>
+                                        <td><?= $obj->getNombreCompleto() ?></td>
+                                        <td><?= $obj->getTipoIngreso() ?></td>
+                                        <td>Ejemoplo</td>
+                                        <td>Ejemoplo</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-sm" href="<?= $this->url('nuevo-familiar', ['action' => 'addfamiliar', 'id' => $obj->getPacientesIdPacientes()]) ?>">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                            <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default" href="#">
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </a>
+                                            <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-xl" href="#">
+                                                <i class="fas fa-pencil-alt">
+                                                </i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>N° Expediente</th>
+                                    <th>Paciente</th>
+                                    <th>Como ingresa</th>
+                                    <th>Ocupación</th>
+                                    <th>Fecha Nacimiento</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+
+
+                <div class="modal fade" id="modal-default">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Mensaje del Sistema</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Esta seguro que quieres eliminar un paciente</p>
+                                <p>Si eliminas un paciente se realizara un borrado logico del registro y no podras accesar a los datos del expedinte...</p>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+            </div>
+            <!-- ./row -->
+        </div><!-- /.container-fluid -->
+</section>

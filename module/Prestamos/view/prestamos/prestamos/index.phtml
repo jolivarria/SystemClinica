@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<!-- Content Header (Page header) -->
+<h1 class="m-0">Prestamos: <ion-icon name="wallet-outline"></ion-icon><ion-icon name="cash-outline"></ion-icon></h1>
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Datos del paciente</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body" style="display: block;">
+        <table>
+            <tr>
+                <td style="width: 800px;">
+                    <div class="card-footer" style="display: block;">
+
+
+                        <strong>Nombre: </strong><?= $this->paciente->getNomCompleto() ?><br>
+                        <strong>Dirección: </strong><?= $this->paciente->getDireccion() ?><br>
+                        <strong>Escolaridad: </strong><?= $this->paciente->getEscolardiad() ?>
+                    </div>
+                </td>
+                <td style="width:300px;">
+                    <div class="card-footer" style="display: block;">
+                        <strong>Tipo Ingreso: </strong><?= $this->paciente->getTipoIngreso() ?><br>
+                        <strong>Acude: </strong><?= $this->paciente->getAcude() ?><br>
+                        <strong>Fecha Ingreso: </strong><?= $this->paciente->getFechaIngreso() ?>
+                    </div>
+                </td>
+                <td style="width:300px;">
+                    <div class="card-footer" style="display: block;">
+                        <div class="image">
+                            <img height="73px" width="73px" src="/sysclinica/public/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+
+
+    </div>
+
+</div>
+<section class="content">
+
+    <div class="card card-info card-outline">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Prestamos del SysClinica</h1>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <a class="btn btn-app" href="<?= $this->url('prestamos', ['action' => 'nuevo', 'id' => $this->id]); ?>">
+                            <i class="fas fa-file"></i> Nuevo
+                        </a>
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Monto</th>
+                                    <th>Interés</th>
+                                    <th>Palzo</th>
+                                    <th>Concepto</th>
+                                    <th>Status</th>
+                                    <th>Fecha Prestamo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($this->citas as $obj) { ?>
+                                    <tr>
+                                        <td>
+                                            <?php
+                                            $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+                                            ?>
+                                            <div class="info">
+                                                <a href="#" class="d-block"><?= $formatter->formatCurrency($obj->getPrestamoMonto(), 'USD'), PHP_EOL; ?></a>
+                                            </div>
+                                        </td>
+                                        <td><?= $obj->getTazaInteres() ?></td>
+                                        </td>
+                                        <td><?= $obj->getPlazo() ?></td>
+                                        <td><?= $obj->getConcepto() ?></td>
+                                        <td><?= $obj->getStatus() ?></td>
+                                        <td>
+                                            <?= $obj->getFechaPrestamo() ?><br>
+                                            <?= obtenerFechaEnLetra($obj->getFechaPrestamo()) ?>
+                                        </td>
+
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Monto</th>
+                                    <th>Interés</th>
+                                    <th>Palzo</th>
+                                    <th>Concepto</th>
+                                    <th>Status</th>
+                                    <th>Fecha Prestamo</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+        <!-- ./row -->
+    </div><!-- /.container-fluid -->
+</section>
+<?php
+function obtenerFechaEnLetra($fecha){
+    $dia= conocerDiaSemanaFecha($fecha);
+    $num = date("j", strtotime($fecha));
+    $anno = date("Y", strtotime($fecha));
+    $mes = array('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre');
+    $mes = $mes[(date('m', strtotime($fecha))*1)-1];
+    return $dia.', '.$num.' de '.$mes.' del '.$anno;
+}
+function conocerDiaSemanaFecha($fecha) {
+    $dias = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
+    $dia = $dias[date('w', strtotime($fecha))];
+    return $dia;
+}
+?>

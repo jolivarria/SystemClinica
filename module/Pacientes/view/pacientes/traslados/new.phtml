@@ -1,0 +1,182 @@
+
+  <?php
+
+  /**
+   * @var Laminas\View\Renderer\PhpRenderer $this
+   */
+
+  $title =  $this->translate('Nuevo traslado'); # page title
+  # meta keywords
+  $this->headMeta()->appendName('keywords', 'Traslado, Rescate, Pacientes');
+  # meta description
+  $this->headMeta()->appendName('description', 'Nuevos Traslados de Pacientes');
+  # page title
+  $this->headTitle($this->escapeHtml($title));
+
+
+  #form
+  $form = $this->form;
+  $this->form->prepare();
+  $form->setAttribute('action', $this->url('traslado-new'));  #oops
+
+  ?>
+
+  <div class="card card-warning card-outline">
+    <div class="card-header">
+      <h3 class="card-title">
+        <i class="fas fa-edit"></i>
+        Toastr Examples
+      </h3>
+    </div>
+    <div class="card-body">
+      <button type="button" class="btn btn-success toastrDefaultSuccess">
+        Launch Success Toast
+      </button>
+      <button type="button" class="btn btn-info toastrDefaultInfo">
+        Launch Info Toast
+      </button>
+      <button type="button" class="btn btn-danger toastrDefaultError">
+        Launch Error Toast
+      </button>
+      <button type="button" class="btn btn-warning toastrDefaultWarning">
+        Launch Warning Toast
+      </button>
+      <div class="text-muted mt-3">
+        For more examples look at <a href="https://codeseven.github.io/toastr/">https://codeseven.github.io/toastr/</a>
+      </div>
+    </div>
+    <!-- /.card -->
+  </div>
+
+  <?= $this->form()->openTag($form); ?>
+
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Capturar al paciente a trasladar</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="row">
+        <div class="col-5">
+          <!-- text input -->
+          <div class="form-group">
+            <?= $this->formHidden($form->get('idsolicitudRescate')); ?>
+            <?= $this->formLabel($form->get('nombreCompleto')); ?>
+            <?= $this->formText($form->get('nombreCompleto')); ?>
+          </div>
+          <div class="text-danger">
+            <?= $this->formElementErrors($form->get('nombreCompleto')); ?>
+          </div>
+        </div>
+      </div>
+      <div class="col-1">
+        <div class="form-group">
+          <?= $this->formLabel($form->get('edad')); ?>
+          <?= $this->formText($form->get('edad')); ?>
+        </div>
+      </div>
+      <div class="text-danger">
+        <?= $this->formElementErrors($form->get('edad')); ?>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <?= $this->formLabel($form->get('parentesco')); ?>
+          <?= $this->formText($form->get('parentesco')); ?>
+        </div>
+      </div>
+      <div class="text-danger">
+        <?= $this->formElementErrors($form->get('parentesco')); ?>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <?= $this->formLabel($form->get('nombreResposable')); ?>
+          <?= $this->formText($form->get('nombreResposable')); ?>
+        </div>
+      </div>
+      <div class="text-danger">
+        <?= $this->formElementErrors($form->get('nombreResposable')); ?>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <?= $this->formLabel($form->get('celular')); ?>
+          <?= $this->formText($form->get('celular')); ?>
+        </div>
+      </div>
+      <div class="text-danger">
+        <?= $this->formElementErrors($form->get('celular')); ?>
+      </div>
+      <div class="col-md-9">
+        <div class="form-group">
+          <?= $this->formLabel($form->get('direccion')); ?>
+          <?= $this->formText($form->get('direccion')); ?>
+        </div>
+        <div class="text-danger">
+          <?= $this->formElementErrors($form->get('direccion')); ?>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <?= $this->formLabel($form->get('folio')); ?>
+            <?= $this->formText($form->get('folio')); ?>
+          </div>
+        </div>
+        <div class="text-danger">
+          <?= $this->formElementErrors($form->get('folio')); ?>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <?= $this->formLabel($form->get('operadora')); ?>
+            <?= $this->formText($form->get('operadora')); ?>
+          </div>
+        </div>
+        <div class="text-danger">
+          <?= $this->formElementErrors($form->get('operadora')); ?>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <?= $this->formLabel($form->get('costo')); ?>
+            <?= $this->formText($form->get('costo')); ?>
+          </div>
+        </div>
+        <div class="text-danger">
+          <?= $this->formElementErrors($form->get('costo')); ?>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-group">
+        <?= $this->formSubmit($form->get('btnGuardar')); ?>
+        <button type="button" id="btnCerrar1" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <?= $this->form()->closeTag(); ?>
+
+
+<!---<script>
+  $(document).ready(function() {
+    // Handler for .ready() called.
+    console.log('se carga otro escript');
+    //$("new-traslado").first().trigger("submit");
+    $("#new-traslado").on("submit", function(event) {
+      var data = $(this).serialize();
+      $.ajax({
+        type: "POST",
+        url: "recate/new",
+        data: {
+          data
+        },
+        success: function(response) {
+          alert(response);
+          $("#form1").html(response);
+        },      
+        error: function(response) {
+          console.log('Error:' + response);
+        }
+
+      });
+      event.preventDefault();
+    });
+
+  });
+</script>--¡>

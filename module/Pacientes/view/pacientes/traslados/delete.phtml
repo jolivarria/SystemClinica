@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @var Laminas\View\Renderer\PhpRenderer $this
+ */
+?>
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="callout callout-info">
+              <h5><i class="fas fa-info"></i> Nota:</h5>
+              Hoja de traslado generada por medio del sistema SysClinica....El presente documento establece las normas que rigen el área de separos preventivos de la persona de su domicilio en el Municipio de Hermosillo Sonora México este es un ejemplo...
+            </div>
+
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+              <!-- title row -->
+              <div class="row">
+                <div class="col-12">
+                  <h4>
+                    <i class="fas fa-globe"></i> .<?=$this->traslados['nombreCompleto']?>
+                    <small class="float-right">Fecha: <?=$this->traslados['fechaCreacion']?></small>
+                  </h4>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- info row -->
+              <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                  Para:
+                  <address>
+                    <strong>DOMICILIIO, PACIENTE.</strong><br>
+                    <?=$this->traslados['direccion']?><br>
+                    Edad: <?=$this->traslados['edad']?><br>
+                    Phone: <?=$this->traslados['celular']?><br>
+                    Email: info@SysClinica.com
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                 Quien Solicita:
+                  <address>
+                    <strong><?=$this->traslados['nombreResposable']?></strong><br>
+                    <?=$this->traslados['direccion']?><br>
+                    Parentesco: <?=$this->traslados['parentesco'] ?><br>
+                    Phone: <?=$this->traslados['celular']?><br>
+                    Email: info@SysClinica.com
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  <b>Numero de Folio: <?=$this->traslados['folio']?> </b><br>
+                  <b>Operadora: <?=$this->traslados['operadora']?> </b><br>                  
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <!-- Table row -->
+              <div class="row">
+                <div class="col-12 table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>1</th>
+                      <th>Nombre</th>
+                      <th>Edad #</th>
+                      <th>Domicilio</th>
+                      <th>Celular</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td><?=$this->traslados['nombreCompleto']?></td>
+                      <td><?=$this->traslados['edad']?></td>
+                      <td><?=$this->traslados['direccion']?></td>
+                      <td><?=$this->traslados['celular']?></td>
+                    </tr>
+                   
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                  <p class="lead">Metodos de Pagos:</p>
+                  <img src="../../dist/img/credit/visa.png" alt="Visa">
+                  <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
+                  <img src="../../dist/img/credit/american-express.png" alt="American Express">
+                  <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+
+                  <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                    El pago se realizara en el sito o en oficina 
+                  </p>
+                </div>
+                <!-- /.col -->
+                
+                <div class="col-6">
+                  <p class="lead">Pago del Traslado</p>
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <th style="width:50%">Subtotal:</th>
+                        <td><?='$'.number_format($this->traslados['costo'], 2)?></td>
+                      </tr>
+                      <tr>
+                        <th>Total:</th>
+                        <td><?='$'.number_format($this->traslados['costo'], 2)?></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <!-- this row will not appear when printing -->
+              <div class="row no-print">
+                <div class="col-12">
+                  <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                  <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                    Payment
+                  </button>
+                  <a href="<?= $this->url('traslado-pdf') ?>" class="btn btn-primary float-right"style="margin-right: 5px;"><i class="fas fa-download"></i>Generar PDF</a>
+                  
+                </div>
+              </div>
+            </div>
+            <!-- /.invoice -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
